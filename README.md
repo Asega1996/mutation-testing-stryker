@@ -1,54 +1,93 @@
-# React + TypeScript + Vite
+# Mutation Testing
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project demonstrates a minimal React application using TypeScript and Vite, with a focus on **mutation testing via Stryker**.  
+It includes basic arithmetic components and async patterns, making it suitable for experimenting with mutation testing workflows.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Why use mutation testing
 
-## Expanding the ESLint configuration
+- Measures test quality: Introduces small changes in code and checks if tests detect them.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Detects weak or missing tests: Reveals gaps even if coverage is high.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- Increases confidence: Ensures tests actually validate business logic.
+
+---
+
+## Project Structure
+
+```
+mutation-testing-stryker/
+├── public/
+│   └── vite.svg
+├── src/
+│   ├── components/
+│   │   ├── Addition/
+│   │   │   ├── Addition.tsx
+│   │   │   └── Addition.test.tsx
+│   │   ├── AdditionAsync/
+│   │   │   ├── AdditionAsync.tsx
+│   │   │   └── AdditionAsync.test.tsx
+│   │   ├── AdditionFormAsync/
+│   │   │   ├── AdditionFormAsync.tsx
+│   │   │   └── AdditionFormAsync.test.tsx
+│   │   └── Subtract/
+│   │       ├── Subtract.tsx
+│   │       └── Subtract.test.tsx
+│   ├── services/
+│   │   ├── addition.ts
+│   │   └── subtract.ts
+│   ├── App.tsx
+│   └── main.tsx
+├── stryker.config.mjs
+├── vite.config.ts
+├── eslint.config.js
+├── tsconfig.json
+├── tsconfig.node.json
+└── package.json
+
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## ⚙️ Engines
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+This project requires **Node.js >= 20.0.0** to run properly, especially for tools like **Stryker** for mutation testing.  
+We also recommend using **npm >= 9.0.0**.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### Using nvm (optional)
+
+If you use [nvm](https://github.com/nvm-sh/nvm), you can automatically switch to the correct Node version:
+
+```bash
+nvm use
 ```
+
+## Installing Dependencies
+
+```bash
+npm install
+```
+
+## Key Scripts
+
+- Start dev server
+
+```bash
+npm run dev
+```
+
+- Run tests
+
+```bash
+npm run test
+```
+
+![Descripción de la imagen](./images/test.png)
+
+- Run mutation test (Stryker)
+
+```bash
+npm run mutate
+```
+
+![Descripción de la imagen](./images/mutation.png)
